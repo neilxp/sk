@@ -41,7 +41,9 @@ ${COBJS}:%.o:%.c
 %.d : %.cpp
 	${CXX} -MM -MD ${CFLAGS} $< -o $@ -MT ${@:.d=.o}
 
+ifneq ($(MAKECMDGOALS),clean)
 -include $(DEPS)
+endif
 
 clean:
 	rm -f ${OBJS} ${TARGET} ${DEPS}
