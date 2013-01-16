@@ -33,7 +33,7 @@ class Index:
         form = self.form()
         if not form.validates():
             todos = model.get_todos()
-            return render.index(todos, form)
+            raise web.seeother('/')
         model.new_todo(form.d.title)
         raise web.seeother('/')
 

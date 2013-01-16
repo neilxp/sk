@@ -9,7 +9,7 @@ $for todo in todos:
     <tr>
         <td>$todo.title</td>
         <td>
-            <form action="/del/$todo.id" method="post">
+            <form action="/del/$todo.id" method="post" data-ajax="false">
                 <input type="submit" value="Delete"/>
             </form>
         </td>
