@@ -1,21 +1,15 @@
-$def with (todos, form)
+$def with (news)
 
-<table>
-    <tr>
-        <th>What to do ?</th>
-        <th></th>
-    </tr>
-$for todo in todos:
-    <tr>
-        <td>$todo.title</td>
-        <td>
-            <form action="/del/$todo.id" method="post" data-ajax="false">
-                <input type="submit" value="Delete"/>
-            </form>
-        </td>
-    </tr>    
-</table>  
+$for city in news:
+    <div id="checkboxes-city-$city['city']" data-role="fieldcontain">
+        <fieldset data-role="controlgroup">
+            <legend>$city['city']</legend>
+            $for entry in city['news']:
+                <input id="cb-$entry['id']" name="" type="checkbox"><label for="cb-$entry['id']">$entry['title']</label>
+        </fieldset>
+    </div> 
 
 <form action="" method="post">
-$:form.render()
+    <a href="/" data-role="button" data-inline="true">Cancel</a>
+    <a href="/" data-role="button" data-inline="true" data-theme="b">Save</a>
 </form>
