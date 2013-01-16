@@ -15,7 +15,7 @@ LIB= 	\
 
 
 SO_LIB= \
-	-L/usr/local/lib -lboost_system -lboost_program_options \
+	#-L/usr/local/lib -lboost_system -lboost_program_options \
 
 LDFLAGS= \
 	-lpthread \
