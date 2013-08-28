@@ -56,7 +56,7 @@ void freeMemory()
 
 void allocMemory()
 {
-	if (current >= 5){
+	if (current >= 5000){
 		cout << "max exceed. no alloction.\n";
 		return;
 	

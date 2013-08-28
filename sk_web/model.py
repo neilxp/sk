@@ -1,12 +1,10 @@
 import web
 
-db = web.database(dbn='sqlite', db="todo.rdb")
+db = web.database(dbn='sqlite', db="data.rdb")
 
-def get_todos():
-    return db.select('todo', order='id')
+def getAllAvailable():
+	return db.select('news', order='ts', where='status=0')
 
-def new_todo(text):
-    db.insert('todo', title=text)
-
-def del_todo(id):
-    db.delete('todo', where="id=$id", vars=locals())
+def markNotSend(IDs):
+	whereclause = "id in (" + ','.join(IDs) + ")"
+	db.update("news", where = whereclause, status= 1)

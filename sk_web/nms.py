@@ -1,56 +1,45 @@
 # -*- coding: utf-8 -*-
-
-
-""" Basic todo list using webpy 0.3 """
-import web
+import web, re, sqlite3
 import model
 
 ### Url mappings
 
 urls = (
     '/', 'Index',
-    '/del/(\d+)', 'Delete'
+    '/news/action/delete', 'Delete'
 )
 
 
 ### Templates
 render = web.template.render('templates', base='base')
-
+checkBoxMatch = re.compile(r'cb-(\d+)$')
 
 class Index:
     def GET(self):
         """ Show page """
-        news = [
-            {
-                "city":"hangzhou", 
-                "news":[
-                    {"id": 1, "title": u"坚实的龙卷风"},
-                    {"id": 2, "title": u"撒发生地方"},
-                    {"id": 3, "title": u"后脑勺撒娇的发链接阿萨德浪费阿萨德，了解阿萨德。的分公司的风格"},
-                    {"id": 4, "title": u"爱的撒发生地方"},
-                    {"id": 5, "title": u"同样艰难地"},
-                    {"id": 6, "title": u"说分公司的风格"},
-                ]
-            }
-        ]
-        return render.index(news)
-
-    def POST(self):
-        """ Add new entry """
-        if not form.validates():
-            todos = model.get_todos()
-            raise web.seeother('/')
-        model.new_todo(form.d.title)
-        raise web.seeother('/')
-
-
+        news = model.getAllAvailable()
+        newsByCity={}
+        for entry in news:
+            if not newsByCity.has_key(entry['city']):
+                newsByCity[entry['city']] = []
+            value = {'id': entry['id'], 'title': entry['title']}
+            newsByCity[entry['city']].append(value)
+        # from pprint import pformat
+        # print(pformat(newsByCity))
+        return render.index(newsByCity)
 
 class Delete:
 
-    def POST(self, id):
+    def POST(self):
         """ Delete based on ID """
-        id = int(id)
-        model.del_todo(id)
+        IDs=[]
+        i = web.input()
+        for k in i.keys():
+            matchResult = checkBoxMatch.match(k)
+            if matchResult:
+                IDs.append(matchResult.group(1))
+
+        model.markNotSend(IDs)
         raise web.seeother('/')
 
 

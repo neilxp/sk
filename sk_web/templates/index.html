@@ -1,15 +1,15 @@
 $def with (news)
 
-$for city in news:
-    <div id="checkboxes-city-$city['city']" data-role="fieldcontain">
+<form action="/news/action/delete" method="post" data-ajax="false">
+
+$for city in news.keys():
+    <div id="checkboxes-city-$city" data-role="fieldcontain">
         <fieldset data-role="controlgroup">
-            <legend>$city['city']</legend>
-            $for entry in city['news']:
-                <input id="cb-$entry['id']" name="" type="checkbox"><label for="cb-$entry['id']">$entry['title']</label>
+            <legend>$city [$len(news[city])]</legend>
+            $for entry in news[city]:
+                <input id="cb-$entry['id']" name="cb-$entry['id']" type="checkbox"><label for="cb-$entry['id']">$entry['title']</label>
         </fieldset>
     </div> 
 
-<form action="" method="post">
-    <a href="/" data-role="button" data-inline="true">Cancel</a>
-    <a href="/" data-role="button" data-inline="true" data-theme="b">Save</a>
+<button type="submit" data-theme='b'>Delete</button>
 </form>

@@ -20,7 +20,9 @@ SO_LIB= \
 LDFLAGS= \
 	-lpthread \
 	-pg \
-	#-lev \
+	-lev \
+	-lboost_system \
+	-lboost_thread \
 
 .PHONY: all clean
 
