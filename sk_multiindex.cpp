@@ -33,12 +33,22 @@ typedef multi_index_container<
   employee,
   indexed_by<
     // sort by employee::operator<
-    hashed_unique<member<employee, std::string, &employee::name> >,
+    ordered_non_unique<member<employee, std::string, &employee::name> >,
     
     // sort by less<string> on name
     ordered_non_unique<member<employee, int, &employee::age> >
   > 
 > employee_set;
+
+void print_out_by_age(const employee_set& es)
+{
+  // get a view to index #1 (name)
+  const employee_set::nth_index<1>::type& index=es.get<1>();
+  // use index as a regular std::set
+  std::copy(
+    index.begin(),index.end(),
+    std::ostream_iterator<employee>(std::cout, "\n"));
+}
 
 void print_out_by_name(const employee_set& es)
 {
@@ -66,6 +76,8 @@ int main(int argc, char** argv)
 		str_index.replace(itr, newe);
 	}
 	print_out_by_name(es);
+	cout << "-----\n";
+	print_out_by_age(es);
 	return 0;
 }
 

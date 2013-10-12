@@ -21,8 +21,9 @@ LDFLAGS= \
 	-lpthread \
 	-pg \
 	-lev \
+	-lssl \
 	-lboost_system \
-	-lboost_thread \
+#	-lboost_thread \
 
 .PHONY: all clean
 
